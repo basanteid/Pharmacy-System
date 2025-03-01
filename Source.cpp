@@ -49,6 +49,86 @@ void displayMedicine() { // دالة لعرض الادوية علي الشاشة
         cout << "********\n";
     }
 }
+         //ندي
+Medicine medicines[100];   // مصفوفه لتزين الادويه
+int medicineCount = 0;    // عدد الادويه المسجله
+
+void AddMedicine() {    // داله لاضافه دواء جديد
+    if (medicineCount >= 100) {
+        cout << "we can't enter a new medicine the list is full" << endl;
+        return;
+    }
+    else {
+        Medicine newMedicine;
+        cout << "enter the name of the medicine : " << endl;
+        cin >> newMedicine.name;
+        cout << "enter the price of the medicine : " << endl;
+        cin >> newMedicine.price;
+        cout << "enter the stock of the medicine : " << endl;
+        cin >> newMedicine.stock;
+        medicines[medicineCount] = newMedicine;
+        medicineCount++;
+        cout << "the medicine enter successfully" << endl;
+    }
+}
+
+static void UpdateStock()    //  داله لتحديث مخزون الدواء
+{
+    if (medicineCount == 0) {
+        cout << "there's no medicine added" << endl;
+        return;
+    }
+    string SearchName;
+    int NewStock;
+    cout << "inter the name of the medicine you wanna update : " << endl;
+    cin >> SearchName;
+    bool found = false;
+    for (int i = 0;i < medicineCount;i++) {
+        if (medicines[i].name == SearchName) {
+            found = true;
+            cout << "stock for " << medicines[i].stock << " : " << medicines[i].stock << endl;
+            cout << "enter new stock value " << endl;
+            cin >> NewStock;
+            if (NewStock >= 0) {
+                medicines[i].stock = NewStock;
+                cout << "update stock successfully: " << NewStock << endl;
+            }
+            else {
+                cout << "stock can't be -ve" << endl;
+            }
+            return;
+        }
+    }
+    if (!found) {
+        cout << "medicine " << SearchName << " can't found" << endl;
+    }
+}
+
+int main() {
+    int Choice;
+    do {
+        cout << endl << "Pharmacy System" << endl;
+        cout << "1) add new medicine" << endl;
+        cout << "2) Update Stock" << endl;
+        cout << "3) exit" << endl;
+        cout << "enter your choice" << endl;
+        cin >> Choice;
+        switch (Choice) {
+        case 1:
+            AddMedicine();
+            break;
+        case 2:
+            UpdateStock();
+            break;
+        case 3:
+            cout << "exiting successfully" << endl;
+            break;
+        default:
+            cout << "incorrect choice,try again" << endl;
+        }
+    } while (Choice != 3);
+    return 0;
+}
 
 Medicine cart[SIZE];
 int cartSize = 0;
